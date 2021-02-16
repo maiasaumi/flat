@@ -37,10 +37,16 @@ const updateSingleProduct = async (id, name, desc, owner, address) => {
   return product;
 }
 
+const deleteSingleProduct = async (id) => {
+  const product = await stripe.products.del(id);
+  return product;
+}
+
 module.exports = {
   getAllProducts,
   createSingleProduct,
-  updateSingleProduct
+  updateSingleProduct,
+  deleteSingleProduct
 }
 
 
