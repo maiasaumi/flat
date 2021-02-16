@@ -12,6 +12,8 @@
   "main": "index.js",
   "dependencies": {
     "core-js": "^3.6.5",
+    "dotenv": "^8.2.0",
+    "stripe": "^8.135.0",
     "vue": "^2.6.11",
     "vuetify": "^2.4.0",
     "vuex": "^3.6.2"
