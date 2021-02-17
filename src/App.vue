@@ -8,10 +8,10 @@
     <v-navigation-drawer v-model="sideNav" app clipped dark>
       <v-list>
         <v-list-item link @click="toggleProduct">
-          <v-list-title>Products</v-list-title>
+          Products
         </v-list-item>
         <v-list-item link @click="toggleCustomer">
-          <v-list-title>Customers</v-list-title>
+          Customers
         </v-list-item>
       </v-list>
     </v-navigation-drawer>
