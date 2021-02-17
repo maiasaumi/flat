@@ -2,7 +2,7 @@
   <v-container fluid grid-list-md>
     <v-data-table
       v-bind:headers="headers"
-      :items="products"
+      :items="allProperties"
       @click:row="handleClick"
     >
     </v-data-table>
@@ -15,65 +15,27 @@ export default {
     headers: [
       {
         text: "Name",
-        value: "property_name",
+        value: "name",
       },
       {
         text: "Address",
-        value: "address",
+        value: "metadata.address",
       },
       {
         text: "Image",
-        value: "img",
-      },
-    ],
-    products: [
-      {
-        property_name: "Terrace House",
-        address: "6348 sdhjfglas st.",
-        img:
-          "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.nreionline.com%2Fsites%2Fnreionline.com%2Ffiles%2Fuploads%2F2017%2F03%2Fgarden-apartment-77010.jpg&f=1&nofb=1",
-      },
-      {
-        property_name: "Terrace House",
-        address: "6348 sdhjfglas st.",
-        img:
-          "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.nreionline.com%2Fsites%2Fnreionline.com%2Ffiles%2Fuploads%2F2017%2F03%2Fgarden-apartment-77010.jpg&f=1&nofb=1",
-      },
-      {
-        property_name: "Terrace House",
-        address: "6348 sdhjfglas st.",
-        img:
-          "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.nreionline.com%2Fsites%2Fnreionline.com%2Ffiles%2Fuploads%2F2017%2F03%2Fgarden-apartment-77010.jpg&f=1&nofb=1",
-      },
-      {
-        property_name: "Terrace House",
-        address: "6348 sdhjfglas st.",
-        img:
-          "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.nreionline.com%2Fsites%2Fnreionline.com%2Ffiles%2Fuploads%2F2017%2F03%2Fgarden-apartment-77010.jpg&f=1&nofb=1",
-      },
-      {
-        property_name: "Terrace House",
-        address: "6348 sdhjfglas st.",
-        img:
-          "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.nreionline.com%2Fsites%2Fnreionline.com%2Ffiles%2Fuploads%2F2017%2F03%2Fgarden-apartment-77010.jpg&f=1&nofb=1",
-      },
-      {
-        property_name: "Terrace House",
-        address: "6348 sdhjfglas st.",
-        img:
-          "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.nreionline.com%2Fsites%2Fnreionline.com%2Ffiles%2Fuploads%2F2017%2F03%2Fgarden-apartment-77010.jpg&f=1&nofb=1",
-      },
-      {
-        property_name: "Terrace House",
-        address: "6348 sdhjfglas st.",
-        img:
-          "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.nreionline.com%2Fsites%2Fnreionline.com%2Ffiles%2Fuploads%2F2017%2F03%2Fgarden-apartment-77010.jpg&f=1&nofb=1",
+        value: "images[0]",
       },
     ],
   }),
+  computed: {
+    allProperties: function() {
+      return this.$store.state.allProperties;
+    },
+  },
   methods: {
     handleClick: function(row) {
-      console.log(row);
+      this.$store.dispatch("setSelectedProduct", row);
+      this.$store.dispatch("setShowDetailed", true);
     },
   },
 };

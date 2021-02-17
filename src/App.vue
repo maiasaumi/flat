@@ -1,11 +1,20 @@
 <template>
   <v-app>
-    <v-app-bar app dark>
+    <v-app-bar app dark clipped-left>
       <h1>FLAT.</h1>
       <v-spacer></v-spacer>
-      <v-btn light class="mr-3" @click="toggleProduct">Product List</v-btn>
-      <v-btn light @click="toggleCustomer">Customer List</v-btn>
+      <v-app-bar-nav-icon @click="handleNav"></v-app-bar-nav-icon>
     </v-app-bar>
+    <v-navigation-drawer v-model="sideNav" app clipped dark>
+      <v-list>
+        <v-list-item link @click="toggleProduct">
+          Products
+        </v-list-item>
+        <v-list-item link @click="toggleCustomer">
+          Customers
+        </v-list-item>
+      </v-list>
+    </v-navigation-drawer>
     <v-main>
       <Products v-if="mainView === 'Product'" />
       <Customers v-else />
@@ -31,6 +40,9 @@ export default {
     mainView: function() {
       return this.$store.state.mainView;
     },
+    sideNav: function() {
+      return this.$store.state.sideNav;
+    },
   },
   methods: {
     toggleCustomer: function() {
@@ -38,6 +50,9 @@ export default {
     },
     toggleProduct: function() {
       this.$store.dispatch("setView", "Product");
+    },
+    handleNav: function() {
+      this.$store.commit("setSideNav");
     },
   },
 };
