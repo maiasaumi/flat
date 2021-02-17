@@ -1,7 +1,4 @@
-require("dotenv").config();
-
-const stripeKey = process.env.STRIPEKEY;
-const stripe = require("stripe")(stripeKey);
+const stripe = require("./config");
 
 const getAllProducts = async (limit=10) => {
   const products = await stripe.products.list({
