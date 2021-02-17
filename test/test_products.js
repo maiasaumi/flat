@@ -3,6 +3,7 @@ const { expect } = chai;
 
 const {
   getAllProducts,
+  getSingleProduct,
   createSingleProduct,
   updateSingleProduct,
   deleteSingleProduct,
@@ -17,9 +18,18 @@ describe("Products", () => {
     });
   });
 
+  describe("getSingleProduct", () => {
+    it("should return a single product", async () => {
+      await getSingleProduct("prod_IxNsY87n7TRHdE").then((res) => {
+        expect(res.object).to.equal("product");
+        expect(res.prices).to.be.an("array");
+      });
+    });
+  });
+
   describe("createSingleProduct", () => {
     it("should return a created product", async () => {
-      await createSingleProduct("def", "456", "some guy").then((res) => {
+      await createSingleProduct("def", "456", true, "some guy").then((res) => {
         expect(res.name).to.equal("def");
       });
     });
@@ -28,10 +38,7 @@ describe("Products", () => {
   describe("updateSingleProduct", () => {
     it("should update and return a single product", async () => {
       await updateSingleProduct(
-        "prod_IRnOkX1NGpvifh",
-        "hij",
-        "456",
-        "another guy"
+        "prod_IRnOkX1NGpvifh", "hij", "456", false, "another guy"
       ).then((res) => {
         expect(res.name).to.equal("hij");
       });
