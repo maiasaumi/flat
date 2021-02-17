@@ -1,14 +1,49 @@
 <template>
   <v-container fluid>
     <v-overlay :value="showDetailed">
-      <v-container>
-        <v-card light>
-          <v-card-title>{{ selectedProduct.property_name }}</v-card-title>
+      <v-container fluid>
+        <v-card light class="pl-5 cardSize">
+          <v-row justify="center">
+            <v-card-title>{{ selectedProduct.name }}</v-card-title>
+          </v-row>
+          <v-row>
+            <div class="image">
+              <v-img
+                :src="selectedProduct.images ? selectedProduct.images[0] : ''"
+              ></v-img>
+            </div>
+            <div class="ml-5">
+              <p>
+                Owner:
+                {{
+                  selectedProduct.metadata ? selectedProduct.metadata.owner : ""
+                }}
+              </p>
+              <p>
+                Address:
+                {{
+                  selectedProduct.metadata
+                    ? selectedProduct.metadata.address
+                    : ""
+                }}
+              </p>
+            </div>
+            <!-- <ul>
+              <li
+                v-for="utility in selectedProduct.metadata.utilities"
+                :key="utility"
+              >
+                <p>{{ utility }}</p>
+              </li>
+            </ul> -->
+          </v-row>
+          <v-row>
+            <v-btn @click="handleOverlayClose" dark class="mb-5">Close</v-btn>
+          </v-row>
         </v-card>
-        <v-btn @click="handleOverlayClose">Close</v-btn>
       </v-container>
     </v-overlay>
-    <v-row class="text-center" justify="end">
+    <v-row justify="end">
       <v-switch
         value="List"
         false-value="Cards"
@@ -62,3 +97,27 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.image {
+  display: flex;
+  justify-content: center;
+  width: 400px;
+  max-width: 500px;
+  margin: 10px;
+  margin-right: 10px;
+}
+.cardSize {
+  width: 70vw;
+  height: 60vh;
+}
+@media only screen and (max-width: 600px) {
+  .image {
+    width: 92%;
+  }
+  .cardSize {
+    width: 95vw;
+    height: auto;
+  }
+}
+</style>
