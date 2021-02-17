@@ -1,60 +1,44 @@
 <template>
   <v-app>
-    <v-app-bar
-      app
-      color="primary"
-      dark
-    >
-      <div class="d-flex align-center">
-        <v-img
-          alt="Vuetify Logo"
-          class="shrink mr-2"
-          contain
-          src="https://cdn.vuetifyjs.com/images/logos/vuetify-logo-dark.png"
-          transition="scale-transition"
-          width="40"
-        />
-
-        <v-img
-          alt="Vuetify Name"
-          class="shrink mt-1 hidden-sm-and-down"
-          contain
-          min-width="100"
-          src="https://cdn.vuetifyjs.com/images/logos/vuetify-name-dark.png"
-          width="100"
-        />
-      </div>
-
+    <v-app-bar app dark>
+      <h1>FLAT.</h1>
       <v-spacer></v-spacer>
-
-      <v-btn
-        href="https://github.com/vuetifyjs/vuetify/releases/latest"
-        target="_blank"
-        text
-      >
-        <span class="mr-2">Latest Release</span>
-        <v-icon>mdi-open-in-new</v-icon>
-      </v-btn>
+      <v-btn light class="mr-3" @click="toggleProduct">Product List</v-btn>
+      <v-btn light @click="toggleCustomer">Customer List</v-btn>
     </v-app-bar>
-
     <v-main>
-      <HelloWorld/>
+      <Products v-if="mainView === 'Product'" />
+      <Customers v-else />
     </v-main>
   </v-app>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld';
-
+import Products from "./components/Products";
+import Customers from "./components/Customers";
 export default {
-  name: 'App',
+  name: "App",
 
   components: {
-    HelloWorld,
+    Products,
+    Customers,
   },
 
   data: () => ({
     //
   }),
+  computed: {
+    mainView: function() {
+      return this.$store.state.mainView;
+    },
+  },
+  methods: {
+    toggleCustomer: function() {
+      this.$store.dispatch("setView", "Customer");
+    },
+    toggleProduct: function() {
+      this.$store.dispatch("setView", "Product");
+    },
+  },
 };
 </script>

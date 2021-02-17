@@ -6,16 +6,29 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     allProperties: [],
+    productsView: true,
+    mainView: "Product",
   },
   mutations: {
     setAllProperties(state, properties) {
       state.allProperties = properties;
     },
+    changeProductView(state) {
+      state.productsView = !state.productsView;
+    },
+    setMainView(state, view) {
+      state.mainView = view;
+    },
   },
   actions: {
     getAllProperties: async ({ commit }) => {
-      const allProperties = await axios.get("url");
-      commit("setAllProperties", allProperties);
+      commit("setAllProperties");
+    },
+    toggleProductsView: ({ commit }) => {
+      commit("changeProductView");
+    },
+    setView: ({ commit }, view) => {
+      commit("setMainView", view);
     },
   },
 });
