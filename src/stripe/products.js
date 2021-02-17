@@ -10,6 +10,11 @@ const getAllProducts = async (limit=10) => {
   return products;
 };
 
+const getSingleProduct = async (id) => {
+  const product = await stripe.products.retrieve(id);
+  return product;
+};
+
 const createSingleProduct = async (name, desc, owner, address) => {
   const product = await stripe.products.create({
     name: name,
@@ -44,6 +49,7 @@ const deleteSingleProduct = async (id) => {
 
 module.exports = {
   getAllProducts,
+  getSingleProduct,
   createSingleProduct,
   updateSingleProduct,
   deleteSingleProduct
