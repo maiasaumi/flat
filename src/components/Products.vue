@@ -1,5 +1,5 @@
 <template>
-  <v-container>
+  <v-container fluid>
     <v-row class="text-center" justify="end">
       <v-switch
         value="List"
@@ -8,6 +8,9 @@
         class="mr-3"
         @click="toggleView"
       ></v-switch>
+      <v-btn dark class="mt-3 ml-3 mr-3" @click="handleClick"
+        >Add Product</v-btn
+      >
     </v-row>
     <v-row>
       <Cards v-if="!productsView" />
@@ -35,6 +38,9 @@ export default {
   methods: {
     toggleView: function() {
       this.$store.dispatch("toggleProductsView");
+    },
+    handleClick: function() {
+      this.$store.dispatch("handleClick");
     },
   },
 };

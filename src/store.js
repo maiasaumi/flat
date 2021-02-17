@@ -7,6 +7,7 @@ export default new Vuex.Store({
   state: {
     allProperties: [],
     productsView: true,
+    mainView: "Product",
   },
   mutations: {
     setAllProperties(state, properties) {
@@ -15,6 +16,9 @@ export default new Vuex.Store({
     changeProductView(state) {
       state.productsView = !state.productsView;
     },
+    setMainView(state, view) {
+      state.mainView = view;
+    },
   },
   actions: {
     getAllProperties: async ({ commit }) => {
@@ -22,6 +26,9 @@ export default new Vuex.Store({
     },
     toggleProductsView: ({ commit }) => {
       commit("changeProductView");
+    },
+    setView: ({ commit }, view) => {
+      commit("setMainView", view);
     },
   },
 });
