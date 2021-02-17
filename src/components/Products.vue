@@ -1,5 +1,13 @@
 <template>
   <v-container fluid>
+    <v-overlay :value="showDetailed">
+      <v-container>
+        <v-card light>
+          <v-card-title>{{ selectedProduct.property_name }}</v-card-title>
+        </v-card>
+        <v-btn @click="handleOverlayClose">Close</v-btn>
+      </v-container>
+    </v-overlay>
     <v-row class="text-center" justify="end">
       <v-switch
         value="List"
@@ -34,6 +42,12 @@ export default {
     productsView: function() {
       return this.$store.state.productsView;
     },
+    showDetailed: function() {
+      return this.$store.state.showDetailed;
+    },
+    selectedProduct: function() {
+      return this.$store.state.selectedProduct;
+    },
   },
   methods: {
     toggleView: function() {
@@ -41,6 +55,9 @@ export default {
     },
     handleClick: function() {
       this.$store.dispatch("handleClick");
+    },
+    handleOverlayClose: function() {
+      this.$store.dispatch("setShowDetailed", false);
     },
   },
 };
