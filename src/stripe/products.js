@@ -7,27 +7,31 @@ const getAllProducts = async (limit=10) => {
   return products;
 };
 
-const createSingleProduct = async (name, desc, owner, address) => {
+const createSingleProduct = async (name, desc, active, owner, address, utilities) => {
   const product = await stripe.products.create({
     name: name,
     description: desc,
+    active: active,
     metadata: {
       owner: owner,
-      address: address
+      address: address,
+      utilities: utilities
     }
   });
   return product;
 }
 
-const updateSingleProduct = async (id, name, desc, owner, address) => {
+const updateSingleProduct = async (id, name, desc, active, owner, address, utilities) => {
   const product = await stripe.products.update(
     id,
     {
       name: name,
       description: desc,
+      active: active,
       metadata: {
         owner: owner,
-        address: address
+        address: address,
+        utilities: utilities
       }
     }
   );

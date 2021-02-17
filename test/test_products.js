@@ -19,7 +19,7 @@ describe("Products", () => {
 
   describe("createSingleProduct", () => {
     it("should return a created product", async () => {
-      await createSingleProduct("def", "456", "some guy").then((res) => {
+      await createSingleProduct("def", "456", true, "some guy").then((res) => {
         expect(res.name).to.equal("def");
       });
     });
@@ -28,10 +28,7 @@ describe("Products", () => {
   describe("updateSingleProduct", () => {
     it("should update and return a single product", async () => {
       await updateSingleProduct(
-        "prod_IRnOkX1NGpvifh",
-        "hij",
-        "456",
-        "another guy"
+        "prod_IRnOkX1NGpvifh", "hij", "456", false, "another guy"
       ).then((res) => {
         expect(res.name).to.equal("hij");
       });
