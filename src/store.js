@@ -8,6 +8,11 @@ export default new Vuex.Store({
     allProperties: [],
     productsView: true,
     mainView: "Product",
+    sideNav: false,
+    selectedProduct: {},
+    selectedCustomer: {},
+    newCustomer: false,
+    showDetailed: false,
   },
   mutations: {
     setAllProperties(state, properties) {
@@ -19,6 +24,21 @@ export default new Vuex.Store({
     setMainView(state, view) {
       state.mainView = view;
     },
+    setSideNav(state) {
+      state.sideNav = !state.sideNav;
+    },
+    setSelectedCustomer(state, customer) {
+      state.selectedCustomer = customer;
+    },
+    setSelectedProduct(state, product) {
+      state.selectedProduct = product;
+    },
+    setNewCustomer(state, value) {
+      state.newCustomer = value;
+    },
+    setShowDetailed(state, value) {
+      state.showDetailed = value;
+    },
   },
   actions: {
     getAllProperties: async ({ commit }) => {
@@ -29,6 +49,18 @@ export default new Vuex.Store({
     },
     setView: ({ commit }, view) => {
       commit("setMainView", view);
+    },
+    setSelectedCustomer: ({ commit }, customer) => {
+      commit("setSelectedCustomer", customer);
+    },
+    setSelectedProduct: ({ commit }, product) => {
+      commit("setSelectedProduct", product);
+    },
+    setNewCustomer: ({ commit }, value) => {
+      commit("setNewCustomer", value);
+    },
+    setShowDetailed: ({ commit }, value) => {
+      commit("setShowDetailed", value);
     },
   },
 });

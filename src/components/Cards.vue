@@ -5,8 +5,9 @@
         xs12
         md6
         v-for="product in products"
-        :key="product.address"
+        :key="product.id"
         justify="center"
+        @click="setProduct(product)"
       >
         <v-card
           min-width="360px"
@@ -36,6 +37,7 @@ export default {
   data: () => ({
     products: [
       {
+        id: 1,
         property_name: "Terrace House",
         address: "6348 sdhjfglas st.",
         img:
@@ -43,6 +45,8 @@ export default {
         vacant: true,
       },
       {
+        id: 2,
+
         property_name: "Terrace House",
         address: "6348 sdhjfglas st.",
         img:
@@ -50,6 +54,8 @@ export default {
         vacant: true,
       },
       {
+        id: 3,
+
         property_name: "Terrace House",
         address: "6348 sdhjfglas st.",
         img:
@@ -57,6 +63,8 @@ export default {
         vacant: false,
       },
       {
+        id: 4,
+
         property_name: "Terrace House",
         address: "6348 sdhjfglas st.",
         img:
@@ -64,6 +72,8 @@ export default {
         vacant: true,
       },
       {
+        id: 5,
+
         property_name: "Terrace House",
         address: "6348 sdhjfglas st.",
         img:
@@ -71,6 +81,8 @@ export default {
         vacant: false,
       },
       {
+        id: 6,
+
         property_name: "Terrace House",
         address: "6348 sdhjfglas st.",
         img:
@@ -78,6 +90,8 @@ export default {
         vacant: false,
       },
       {
+        id: 7,
+
         property_name: "Terrace House",
         address: "6348 sdhjfglas st.",
         img:
@@ -86,6 +100,12 @@ export default {
       },
     ],
   }),
+  methods: {
+    setProduct: function(product) {
+      this.$store.dispatch("setSelectedProduct", product);
+      this.$store.dispatch("setShowDetailed", true);
+    },
+  },
 };
 </script>
 
