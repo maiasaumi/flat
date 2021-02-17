@@ -1,10 +1,19 @@
 const stripe = require("./config");
 
+const { getAllPrices } = require("./prices");
+
 const getAllProducts = async (limit=10) => {
   const products = await stripe.products.list({
     limit: limit
   });
   return products;
+};
+
+const getSingleProduct = async (id) => {
+  const product = await stripe.products.retrieve(id);
+  const prices = await getAllPrices(id);
+  product.prices = prices.data;
+  return product;
 };
 
 const createSingleProduct = async (name, desc, active, owner, address, utilities) => {
@@ -45,6 +54,7 @@ const deleteSingleProduct = async (id) => {
 
 module.exports = {
   getAllProducts,
+  getSingleProduct,
   createSingleProduct,
   updateSingleProduct,
   deleteSingleProduct

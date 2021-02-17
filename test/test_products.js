@@ -3,6 +3,7 @@ const { expect } = chai;
 
 const {
   getAllProducts,
+  getSingleProduct,
   createSingleProduct,
   updateSingleProduct,
   deleteSingleProduct,
@@ -13,6 +14,15 @@ describe("Products", () => {
     it("should return a list of products", async () => {
       await getAllProducts().then((res) => {
         expect(res.data).to.be.an("array");
+      });
+    });
+  });
+
+  describe("getSingleProduct", () => {
+    it("should return a single product", async () => {
+      await getSingleProduct("prod_IxNsY87n7TRHdE").then((res) => {
+        expect(res.object).to.equal("product");
+        expect(res.prices).to.be.an("array");
       });
     });
   });
