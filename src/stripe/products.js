@@ -45,23 +45,3 @@ module.exports = {
   updateSingleProduct,
   deleteSingleProduct
 }
-
-
-// const getProd = async () => {
-//   const prod = await getAllProducts();
-//   console.log(prod);
-// }
-
-// const createProd = async () => {
-//   const prod = await createSingleProduct(
-//     "def", "456", "some guy", "Setagaya"
-//   );
-//   console.log(prod);
-// }
-
-// const updateProd = async () => {
-//   const prod = await updateSingleProduct(
-//     "prod_IxNcIhTQXTTYr6", "hij", "456", "another guy", "Setagaya"
-//   );
-//   console.log(prod);
-// }
