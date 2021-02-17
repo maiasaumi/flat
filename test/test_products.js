@@ -4,7 +4,8 @@ const { expect } = chai;
 const {
   getAllProducts,
   createSingleProduct,
-  updateSingleProduct
+  updateSingleProduct,
+  deleteSingleProduct,
 } = require("../src/stripe/products");
 
 describe("Products", () => {
@@ -27,10 +28,23 @@ describe("Products", () => {
   describe("updateSingleProduct", () => {
     it("should update and return a single product", async () => {
       await updateSingleProduct(
-        "prod_IRnOkX1NGpvifh", "hij", "456", "another guy"
+        "prod_IRnOkX1NGpvifh",
+        "hij",
+        "456",
+        "another guy"
       ).then((res) => {
         expect(res.name).to.equal("hij");
       });
+    });
+  });
+
+  describe("deleteSingleProduct", () => {
+    it("should delete and return undefiend", async () => {
+      await deleteSingleProduct("price_1HqtnxE5rrbCJ30iplebsXL2").then(
+        (res) => {
+          expect(res.name).to.equal(undefined);
+        }
+      );
     });
   });
 });

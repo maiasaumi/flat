@@ -7,7 +7,6 @@ const getAllCustomers = async (limit = 10) => {
   return customers;
 };
 
-//what information do I need here?
 const createSingleCustomer = async (
   name,
   desc,

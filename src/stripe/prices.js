@@ -5,7 +5,6 @@ const getAllPrices = async (product = "", limit = 10) => {
     product: product,
     limit: limit,
   });
-  console.log(prices);
   return prices;
 };
 
@@ -52,16 +51,8 @@ const updateSinglePrice = async (
   return price;
 };
 
-const deleteSinglePrice = async (id) => {
-  const price = await stripe.prices.del(id);
-  return price;
-};
-
-console.log(getAllPrices());
-
 module.exports = {
   getAllPrices,
   createSinglePrice,
   updateSinglePrice,
-  deleteSinglePrice,
 };
