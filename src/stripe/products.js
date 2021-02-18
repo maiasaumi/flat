@@ -1,55 +1,76 @@
 const stripe = require("./config");
 
-const { getAllPrices } = require("./prices");
-
-const getAllProducts = async (limit=10) => {
-  const products = await stripe.products.list({
-    limit: limit
-  });
-  return products;
+const getAllProducts = async (req, res) => {
+  try {
+    const products = await stripe.products.list({
+      limit: req.query.limit
+    });
+    res.send(products);
+  } catch(err) {
+    console.error(err);
+  }
 };
 
-const getSingleProduct = async (id) => {
-  const product = await stripe.products.retrieve(id);
-  const prices = await getAllPrices(id);
-  product.prices = prices.data;
-  return product;
+const getSingleProduct = async (req, res) => {
+  try {
+    const product = await stripe.products.retrieve(req.params.id);
+    const prices = await stripe.prices.list({
+      product: req.params.id,
+      limit: req.query.limit,
+    });
+    product.prices = prices.data;
+    res.send(product);
+  } catch(err) {
+    console.error(err);
+  }
 };
 
-const createSingleProduct = async (name, desc, active, owner, address, utilities) => {
-  const product = await stripe.products.create({
-    name: name,
-    description: desc,
-    active: active,
-    metadata: {
-      owner: owner,
-      address: address,
-      utilities: utilities
-    }
-  });
-  return product;
-}
-
-const updateSingleProduct = async (id, name, desc, active, owner, address, utilities) => {
-  const product = await stripe.products.update(
-    id,
-    {
-      name: name,
-      description: desc,
-      active: active,
+const createSingleProduct = async (req, res) => {
+  try {
+    const product = await stripe.products.create({
+      name: req.body.name,
+      description: req.body.desc,
+      active: req.body.active,
       metadata: {
-        owner: owner,
-        address: address,
-        utilities: utilities
+        owner: req.body.owner,
+        address: req.body.address,
+        utilities: req.body.utilities
       }
-    }
-  );
-  return product;
+    });
+    res.send(product);
+  } catch (err) {
+    console.error(err);
+  }
 }
 
-const deleteSingleProduct = async (id) => {
-  const product = await stripe.products.del(id);
-  return product;
+const updateSingleProduct = async (req, res) => {
+  try {
+    const product = await stripe.products.update(
+      req.params.id,
+      {
+        name: req.body.name,
+        description: req.body.desc,
+        active: req.body.active,
+        metadata: {
+          owner: req.body.owner,
+          address: req.body.address,
+          utilities: req.body.utilities
+        }
+      }
+    );
+    res.send(product);
+  } catch(err) {
+    console.error(err);
+  }
+}
+
+const deleteSingleProduct = async (req, res) => {
+  try {
+    const product = await stripe.products.del(req.params.id);
+    res.send(product);
+  } catch(err) {
+    console.error(err);
+  }
 }
 
 module.exports = {

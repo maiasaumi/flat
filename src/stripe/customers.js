@@ -1,62 +1,59 @@
 const stripe = require("./config");
 
-const getAllCustomers = async (limit = 10) => {
-  const customers = await stripe.customers.list({
-    limit: limit,
-  });
-  return customers;
+const getAllCustomers = async (req, res) => {
+  try {
+    const customers = await stripe.customers.list({
+      limit: req.query.limit,
+    });
+    res.send(customers);
+  } catch (err) {
+    console.error(err);
+  }
 };
 
-const createSingleCustomer = async (
-  name,
-  desc,
-  address,
-  phone,
-  email,
-  currency,
-  invoice_settings,
-  invoice_prefix
-) => {
-  const customer = await stripe.customers.create({
-    name: name,
-    description: desc,
-    address: address,
-    phone: phone,
-    email: email,
-    currency: currency,
-    invoice_settings: invoice_settings,
-    invoice_prefix: invoice_prefix,
-  });
-  return customer;
+const createSingleCustomer = async (req, res) => {
+  try {
+    const customer = await stripe.customers.create({
+      name: req.body.name,
+      description: req.body.desc,
+      address: req.body.address,
+      phone: req.body.phone,
+      email: req.body.email,
+      currency: req.body.currency,
+      invoice_settings: req.body.invoice_settings,
+      invoice_prefix: req.body.invoice_prefix,
+    });
+    res.send(customer);
+  } catch(err) {
+    console.error(err);
+  }
 };
 
-const updateSingleCustomer = async (
-  id,
-  name,
-  desc,
-  address,
-  phone,
-  email,
-  currency,
-  invoice_settings,
-  invoice_prefix
-) => {
-  const customer = await stripe.customers.update(id, {
-    name: name,
-    description: desc,
-    address: address,
-    phone: phone,
-    email: email,
-    currency: currency,
-    invoice_settings: invoice_settings,
-    invoice_prefix: invoice_prefix,
-  });
-  return customer;
+const updateSingleCustomer = async (req, res) => {
+  try {
+    const customer = await stripe.customers.update(req.params.id, {
+      name: req.body.name,
+      description: req.body.desc,
+      address: req.body.address,
+      phone: req.body.phone,
+      email: req.body.email,
+      currency: req.body.currency,
+      invoice_settings: req.body.invoice_settings,
+      invoice_prefix: req.body.invoice_prefix,
+    });
+    res.send(customer);
+  } catch(err) {
+    console.error(err);
+  }
 };
 
-const deleteSingleCustomer = async (id) => {
-  const customer = await stripe.customers.del(id);
-  return customer;
+const deleteSingleCustomer = async (req, res) => {
+  try {
+    const customer = await stripe.customers.del(req.params.id);
+    res.send(customer);
+  } catch(err) {
+    console.error(err)
+  }
 };
 
 module.exports = {
