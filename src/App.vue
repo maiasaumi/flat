@@ -13,6 +13,9 @@
         <v-list-item link @click="toggleCustomer">
           Customers
         </v-list-item>
+        <v-list-item link @click="refresh">
+          Refresh
+        </v-list-item>
       </v-list>
     </v-navigation-drawer>
     <v-main>
@@ -54,6 +57,9 @@ export default {
     handleNav: function() {
       this.$store.commit("setSideNav");
     },
+    refresh: function() {
+      this.$store.dispatch("getAllProperties");
+    }
   },
 };
 </script>

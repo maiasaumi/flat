@@ -1,5 +1,6 @@
 import Vue from "vue";
 import Vuex from "vuex";
+import axios from "axios";
 
 Vue.use(Vuex);
 
@@ -108,6 +109,8 @@ export default new Vuex.Store({
   },
   actions: {
     getAllProperties: async ({ commit }) => {
+      const products = await axios.get("http://localhost:9000/api/products");
+      console.log(products);
       commit("setAllProperties");
     },
     toggleProductsView: ({ commit }) => {
