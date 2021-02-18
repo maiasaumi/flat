@@ -1,6 +1,2 @@
-require("dotenv").config();
-
-const stripeKey = process.env.STRIPEKEY;
-
-const stripe = require("stripe")(stripeKey);
+const stripe = require("./config");
 console.log(stripe);

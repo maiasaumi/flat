@@ -1,7 +1,6 @@
-require("dotenv").config();
+const stripe = require("./config");
 
-const stripeKey = process.env.STRIPEKEY;
-const stripe = require("stripe")(stripeKey);
+const { getAllPrices } = require("./prices");
 
 const getAllProducts = async (limit=10) => {
   const products = await stripe.products.list({
@@ -10,27 +9,38 @@ const getAllProducts = async (limit=10) => {
   return products;
 };
 
-const createSingleProduct = async (name, desc, owner, address) => {
+const getSingleProduct = async (id) => {
+  const product = await stripe.products.retrieve(id);
+  const prices = await getAllPrices(id);
+  product.prices = prices.data;
+  return product;
+};
+
+const createSingleProduct = async (name, desc, active, owner, address, utilities) => {
   const product = await stripe.products.create({
     name: name,
     description: desc,
+    active: active,
     metadata: {
       owner: owner,
-      address: address
+      address: address,
+      utilities: utilities
     }
   });
   return product;
 }
 
-const updateSingleProduct = async (id, name, desc, owner, address) => {
+const updateSingleProduct = async (id, name, desc, active, owner, address, utilities) => {
   const product = await stripe.products.update(
     id,
     {
       name: name,
       description: desc,
+      active: active,
       metadata: {
         owner: owner,
-        address: address
+        address: address,
+        utilities: utilities
       }
     }
   );
@@ -44,27 +54,8 @@ const deleteSingleProduct = async (id) => {
 
 module.exports = {
   getAllProducts,
+  getSingleProduct,
   createSingleProduct,
   updateSingleProduct,
   deleteSingleProduct
 }
-
-
-// const getProd = async () => {
-//   const prod = await getAllProducts();
-//   console.log(prod);
-// }
-
-// const createProd = async () => {
-//   const prod = await createSingleProduct(
-//     "def", "456", "some guy", "Setagaya"
-//   );
-//   console.log(prod);
-// }
-
-// const updateProd = async () => {
-//   const prod = await updateSingleProduct(
-//     "prod_IxNcIhTQXTTYr6", "hij", "456", "another guy", "Setagaya"
-//   );
-//   console.log(prod);
-// }

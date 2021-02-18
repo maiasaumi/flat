@@ -1,14 +1,10 @@
-require("dotenv").config();
-
-const stripeKey = process.env.STRIPEKEY;
-const stripe = require("stripe")(stripeKey);
+const stripe = require("./config");
 
 const getAllPrices = async (product = "", limit = 10) => {
   const prices = await stripe.prices.list({
     product: product,
     limit: limit,
   });
-  console.log(prices);
   return prices;
 };
 
@@ -55,16 +51,8 @@ const updateSinglePrice = async (
   return price;
 };
 
-const deleteSinglePrice = async (id) => {
-  const price = await stripe.prices.del(id);
-  return price;
-};
-
-console.log(getAllPrices());
-
 module.exports = {
   getAllPrices,
   createSinglePrice,
   updateSinglePrice,
-  deleteSinglePrice,
 };
