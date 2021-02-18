@@ -9,6 +9,30 @@ const createPaymentIntent = async (amount, currency) => {
   return paymentIntent;
 }
 
+const getPaymentIntent = async (id) => {
+  const paymentIntent = await stripe.paymentIntents.retrieve(
+    id
+  );
+  return paymentIntent;
+}
+
+const updatePaymentIntent = async (id, amount, currency) => {
+  const paymentIntent = await stripe.paymentIntents.update(
+    id, { amount: amount, currency: currency }
+  );
+  return paymentIntent;
+}
+
+const cancelPaymentIntent = async (id) => {
+  const paymentIntent = await stripe.paymentIntents.cancel(
+    id,
+  );
+  return paymentIntent;
+}
+
 module.exports = {
-  createPaymentIntent
+  createPaymentIntent,
+  updatePaymentIntent,
+  cancelPaymentIntent,
+  getPaymentIntent,
 }
