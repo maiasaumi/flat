@@ -1,77 +1,14 @@
 import Vue from "vue";
 import Vuex from "vuex";
+import axios from "axios";
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    allProperties: [
-      {
-        id: 1,
-        name: "Terrace Villa",
-        active: true,
-        images: [
-          "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fjorgefontan.com%2Fwp-content%2Fuploads%2F2018%2F09%2FNYC-Apartment-Renovation-Law.jpg&f=1&nofb=1",
-        ],
-        metadata: {
-          owner: "John",
-          address: "435983 South North St.",
-          utilities: ["Tokyo Gas", "Tokyo Electric", "Main Water"],
-        },
-      },
-      {
-        id: 2,
-        name: "Terrace Villa",
-        active: true,
-        images: [
-          "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.nreionline.com%2Fsites%2Fnreionline.com%2Ffiles%2Fuploads%2F2017%2F03%2Fgarden-apartment-77010.jpg&f=1&nofb=1",
-        ],
-        metadata: {
-          owner: "John",
-          address: "435983 South North St.",
-          utilities: ["Tokyo Gas", "Tokyo Electric", "Main Water"],
-        },
-      },
-      {
-        id: 3,
-        name: "Terrace Villa",
-        active: false,
-        images: [
-          "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.nreionline.com%2Fsites%2Fnreionline.com%2Ffiles%2Fuploads%2F2017%2F03%2Fgarden-apartment-77010.jpg&f=1&nofb=1",
-        ],
-        metadata: {
-          owner: "John",
-          address: "435983 South North St.",
-          utilities: ["Tokyo Gas", "Tokyo Electric", "Main Water"],
-        },
-      },
-      {
-        id: 4,
-        name: "Terrace Villa",
-        active: true,
-        images: [
-          "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.nreionline.com%2Fsites%2Fnreionline.com%2Ffiles%2Fuploads%2F2017%2F03%2Fgarden-apartment-77010.jpg&f=1&nofb=1",
-        ],
-        metadata: {
-          owner: "John",
-          address: "435983 South North St.",
-          utilities: ["Tokyo Gas", "Tokyo Electric", "Main Water"],
-        },
-      },
-      {
-        id: 5,
-        name: "Terrace Villa",
-        active: false,
-        images: [
-          "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.nreionline.com%2Fsites%2Fnreionline.com%2Ffiles%2Fuploads%2F2017%2F03%2Fgarden-apartment-77010.jpg&f=1&nofb=1",
-        ],
-        metadata: {
-          owner: "John",
-          address: "435983 South North St.",
-          utilities: ["Tokyo Gas", "Tokyo Electric", "Main Water"],
-        },
-      },
-    ],
+    allProperties: [],
+    allCustomers: [],
+    productPrices: [],
     productsView: true,
     mainView: "Product",
     sideNav: false,
@@ -79,6 +16,7 @@ export default new Vuex.Store({
     selectedCustomer: {},
     newCustomer: false,
     showDetailed: false,
+    addProductView: false
   },
   mutations: {
     setAllProperties(state, properties) {
@@ -105,10 +43,51 @@ export default new Vuex.Store({
     setShowDetailed(state, value) {
       state.showDetailed = value;
     },
+    addProductView(state) {
+      state.addProductView = !state.addProductView;
+    },
+    setAllCustomers(state, customers) {
+      state.allCustomers = customers;
+    },
+    setProductPrices(state, prices) {
+      state.productPrices = prices;
+    }
   },
   actions: {
     getAllProperties: async ({ commit }) => {
-      commit("setAllProperties");
+      const products = await axios.get("http://localhost:9000/api/products");
+      console.log(products.data.data);
+      commit("setAllProperties", products.data.data);
+    },
+    getAllCustomers: async ({ commit }) => {
+      const customers = await axios.get("http://localhost:9000/api/customers");
+      commit("setAllCustomers", customers);
+    },
+    getAllPrices: async ({ commit }, id) => {
+      const prices = await axios.get(
+        `http://localhost:9000/api/prices/?product=${id}`
+      );
+      commit("setProductPrices", prices);
+    },
+    createProperty: async ({ commit }, property) => {
+      console.log(property);
+      await axios
+        .post("http://localhost:9000/api/products", property)
+        .then(res => {
+          this.getAllProperties();
+          commit("setSelectedProduct", res.data.data);
+          console.log(res.data.data);
+        })
+        .catch(err => console.error(err));
+    },
+    createCreateCustomer: async customer => {
+      await axios
+        .post("http://localhost:9000/api/customers", customer)
+        .then(res => {
+          this.getAllCustomers();
+          console.log(res.data.data);
+        })
+        .catch(err => console.error(err));
     },
     toggleProductsView: ({ commit }) => {
       commit("changeProductView");
@@ -128,5 +107,8 @@ export default new Vuex.Store({
     setShowDetailed: ({ commit }, value) => {
       commit("setShowDetailed", value);
     },
-  },
+    addProductView: ({ commit }) => {
+      commit("addProductView");
+    }
+  }
 });

@@ -1,54 +1,49 @@
 const stripe = require("./config");
 
-const getAllPrices = async (product = "", limit = 10) => {
-  const prices = await stripe.prices.list({
-    product: product,
-    limit: limit,
-  });
-  return prices;
+const getAllPrices = async (req, res) => {
+  try {
+    const prices = await stripe.prices.list({
+      product: req.query.product,
+      limit: req.query.limit,
+    });
+    res.send(prices);
+  } catch (err) {
+    console.error(err);
+  }
 };
 
-const createSinglePrice = async (
-  nickname,
-  active,
-  currency,
-  product,
-  reccuring,
-  type,
-  unit_amount
-) => {
-  const price = await stripe.prices.create({
-    nickname: nickname,
-    active: active,
-    currency: currency,
-    product: product,
-    reccuring: reccuring,
-    type: type,
-    unit_amount: unit_amount,
-  });
-  return price;
+const createSinglePrice = async (req, res) => {
+  try {
+    const price = await stripe.prices.create({
+      nickname: req.body.nickname,
+      active: req.body.active,
+      currency: req.body.currency,
+      product: req.body.product,
+      reccuring: req.body.reccuring,
+      type: req.body.type,
+      unit_amount: req.body.unit_amount,
+    });
+    res.sent(price);
+  } catch (err) {
+    console.error(err);
+  }
 };
 
-const updateSinglePrice = async (
-  id,
-  nickname,
-  active,
-  currency,
-  product,
-  reccuring,
-  type,
-  unit_amount
-) => {
-  const price = await stripe.prices.update(id, {
-    nickname: nickname,
-    active: active,
-    currency: currency,
-    product: product,
-    reccuring: reccuring,
-    type: type,
-    unit_amount: unit_amount,
-  });
-  return price;
+const updateSinglePrice = async (req, res) => {
+  try {
+    const price = await stripe.prices.update(req.params.id, {
+      nickname: req.body.nickname,
+      active: req.body.active,
+      currency: req.body.currency,
+      product: req.body.product,
+      reccuring: req.body.reccuring,
+      type: req.body.type,
+      unit_amount: req.body.unit_amount,
+    });
+    res.send(price);
+  } catch (err) {
+    console.error(err);
+  }
 };
 
 module.exports = {

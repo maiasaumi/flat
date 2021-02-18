@@ -10,17 +10,17 @@
       >
         <v-card class="ma-1 mb-5 card_size" @click="setProduct(property)" hover>
           <div class="image_container">
-            <v-img :src="property.images[0]">
+            <!-- <v-img :src="property.images[0]">
               <v-badge
                 content="Vacant"
                 :color="property.active ? 'green darken-1' : 'red darken-2'"
                 class="ml-1"
                 tile
               ></v-badge>
-            </v-img>
+            </v-img> -->
           </div>
-          <v-card-title>{{ property.name }}</v-card-title>
-          <v-card-subtitle>{{ property.metadata.address }}</v-card-subtitle>
+          <v-card-title>{{ property }}</v-card-title>
+          <!-- <v-card-subtitle>{{ property.metadata.address }}</v-card-subtitle> -->
         </v-card>
       </v-col>
     </v-row>
@@ -54,7 +54,6 @@ export default {
   width: 100%;
   height: 70%;
   overflow: hidden;
-  
 }
 
 @media only screen and (max-width: 600px) {

@@ -7,7 +7,7 @@
             <v-card-title>{{ selectedProduct.name }}</v-card-title>
           </v-row>
           <v-row>
-            <div class="image">
+            <!-- <div class="image">
               <v-img
                 :src="selectedProduct.images ? selectedProduct.images[0] : ''"
               ></v-img>
@@ -27,7 +27,7 @@
                     : ""
                 }}
               </p>
-            </div>
+            </div> -->
             <!-- <ul>
               <li
                 v-for="utility in selectedProduct.metadata.utilities"
@@ -55,6 +55,50 @@
         >Add Product</v-btn
       >
     </v-row>
+    <v-form v-if="addProductView">
+      <v-container>
+        <v-row>
+          <v-col>
+            <v-text-field
+              v-model="name"
+              label="property name"
+              Required
+            ></v-text-field>
+          </v-col>
+          <v-col>
+            <v-text-field
+              v-model="address"
+              label="address"
+              Required
+            ></v-text-field>
+          </v-col>
+        </v-row>
+        <v-row>
+          <v-textarea label="description" v-model="description"></v-textarea>
+        </v-row>
+        <v-row>
+          <v-col>
+            <v-text-field
+              v-model="image"
+              label="image url"
+              Required
+            ></v-text-field>
+          </v-col>
+          <v-col>
+            <v-text-field v-model="owner" label="owner" Required></v-text-field>
+          </v-col>
+        </v-row>
+        <v-row>
+          <v-col>
+            <v-switch v-model="active" label="vacant" Required></v-switch>
+          </v-col>
+        </v-row>
+        <v-row justify="end">
+          <v-btn dark class="mr-3" @click="addProduct">Save</v-btn>
+          <v-btn @click="handleClick">Close</v-btn>
+        </v-row>
+      </v-container>
+    </v-form>
     <v-row>
       <Cards v-if="!productsView" />
       <ProductList v-else />
@@ -65,14 +109,22 @@
 <script>
 import Cards from "./Cards";
 import ProductList from "./ProductList";
+// import axios from "axios";
 
 export default {
   name: "Products",
   components: {
     ProductList,
-    Cards,
+    Cards
   },
-  data: () => ({}),
+  data: () => ({
+    name: "",
+    description: "",
+    image: "",
+    active: false,
+    owner: "",
+    address: ""
+  }),
   computed: {
     productsView: function() {
       return this.$store.state.productsView;
@@ -83,18 +135,42 @@ export default {
     selectedProduct: function() {
       return this.$store.state.selectedProduct;
     },
+    addProductView: function() {
+      return this.$store.state.addProductView;
+    }
   },
   methods: {
     toggleView: function() {
       this.$store.dispatch("toggleProductsView");
     },
     handleClick: function() {
-      this.$store.dispatch("handleClick");
+      this.$store.dispatch("addProductView");
     },
     handleOverlayClose: function() {
       this.$store.dispatch("setShowDetailed", false);
     },
-  },
+    addProduct: async function() {
+      const property = {
+        name: this.name,
+        description: this.description,
+        active: this.active,
+        images: [this.image],
+        metadata: {
+          owner: this.owner,
+          address: this.address
+        }
+      };
+      console.log(property);
+      this.$store.dispatch("createProperty", property);
+      // axios
+      //   .post("http://localhost:9000/api/products", property)
+      //   .then(res => {
+      //     this.$store.dispatch("getAllProperties");
+      //     console.log(res.data.data);
+      //   })
+      //   .catch(err => console.error(err));
+    }
+  }
 };
 </script>
 

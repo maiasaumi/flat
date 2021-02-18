@@ -13,6 +13,9 @@
         <v-list-item link @click="toggleCustomer">
           Customers
         </v-list-item>
+        <v-list-item link @click="refresh">
+          Refresh
+        </v-list-item>
       </v-list>
     </v-navigation-drawer>
     <v-main>
@@ -44,6 +47,10 @@ export default {
       return this.$store.state.sideNav;
     }
   },
+  mounted() {
+    this.$store.dispatch("getAllProperties");
+    this.$store.dispatch("getAllCustomers");
+  },
   methods: {
     toggleCustomer: function() {
       this.$store.dispatch("setView", "Customer");
@@ -53,6 +60,9 @@ export default {
     },
     handleNav: function() {
       this.$store.commit("setSideNav");
+    },
+    refresh: function() {
+      this.$store.dispatch("getAllProperties");
     }
   }
 };
