@@ -1,17 +1,20 @@
 <template>
   <v-container fluid>
     <v-overlay :value="showDetailed">
-      <v-container fluid>
-        <v-card light class="pl-5 cardSize">
-          <v-row justify="center">
-            <v-card-title>{{ selectedProduct.name }}</v-card-title>
-          </v-row>
-          <v-row>
-            <!-- <div class="image">
+      <v-card light class="cardSize d-flex">
+        <v-row justify="center mt-5">
+          <h1>{{ selectedProduct.name }}</h1>
+        </v-row>
+        <v-row justify="center" class="ma-5">
+          <v-col class="d-flex justify-content-center">
+            <div class="image">
               <v-img
                 :src="selectedProduct.images ? selectedProduct.images[0] : ''"
               ></v-img>
             </div>
+          </v-col>
+          <v-divider :vertical="true"></v-divider>
+          <v-col>
             <div class="ml-5">
               <p>
                 Owner:
@@ -27,7 +30,7 @@
                     : ""
                 }}
               </p>
-            </div> -->
+            </div>
             <!-- <ul>
               <li
                 v-for="utility in selectedProduct.metadata.utilities"
@@ -36,12 +39,12 @@
                 <p>{{ utility }}</p>
               </li>
             </ul> -->
-          </v-row>
-          <v-row>
-            <v-btn @click="handleOverlayClose" dark class="mb-5">Close</v-btn>
-          </v-row>
-        </v-card>
-      </v-container>
+          </v-col>
+        </v-row>
+        <v-row justify="end" class="mr-8 mb-2">
+          <v-btn @click="handleOverlayClose" dark class="mb-5">Close</v-btn>
+        </v-row>
+      </v-card>
     </v-overlay>
     <v-row justify="end">
       <v-switch
@@ -74,7 +77,11 @@
           </v-col>
         </v-row>
         <v-row>
-          <v-textarea label="description" v-model="description"></v-textarea>
+          <v-textarea
+            label="description"
+            v-model="description"
+            class="pa-3"
+          ></v-textarea>
         </v-row>
         <v-row>
           <v-col>
@@ -100,8 +107,10 @@
       </v-container>
     </v-form>
     <v-row>
-      <Cards v-if="!productsView" />
-      <ProductList v-else />
+      <v-container fluid>
+        <Cards v-if="productsView" />
+        <ProductList v-else />
+      </v-container>
     </v-row>
   </v-container>
 </template>
@@ -162,13 +171,6 @@ export default {
       };
       console.log(property);
       this.$store.dispatch("createProperty", property);
-      // axios
-      //   .post("http://localhost:9000/api/products", property)
-      //   .then(res => {
-      //     this.$store.dispatch("getAllProperties");
-      //     console.log(res.data.data);
-      //   })
-      //   .catch(err => console.error(err));
     }
   }
 };
@@ -180,19 +182,19 @@ export default {
   justify-content: center;
   width: 400px;
   max-width: 500px;
-  margin: 10px;
   margin-right: 10px;
 }
 .cardSize {
+  flex-direction: column;
   width: 70vw;
-  height: 60vh;
+  height: 40vh;
 }
 @media only screen and (max-width: 600px) {
   .image {
-    width: 92%;
+    width: 100%;
   }
   .cardSize {
-    width: 95vw;
+    width: 93vw;
     height: auto;
   }
 }

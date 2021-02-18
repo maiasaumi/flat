@@ -61,7 +61,7 @@ export default new Vuex.Store({
     },
     getAllCustomers: async ({ commit }) => {
       const customers = await axios.get("http://localhost:9000/api/customers");
-      commit("setAllCustomers", customers);
+      commit("setAllCustomers", customers.data.data);
     },
     getAllPrices: async ({ commit }, id) => {
       const prices = await axios.get(
@@ -69,22 +69,23 @@ export default new Vuex.Store({
       );
       commit("setProductPrices", prices);
     },
-    createProperty: async ({ commit }, property) => {
+    createProperty: async ({ commit, dispatch }, property) => {
       console.log(property);
       await axios
         .post("http://localhost:9000/api/products", property)
         .then(res => {
-          this.getAllProperties();
+          dispatch("getAllProperties");
           commit("setSelectedProduct", res.data.data);
           console.log(res.data.data);
         })
         .catch(err => console.error(err));
     },
-    createCreateCustomer: async customer => {
+    createCustomer: async ({ commit }, customer) => {
       await axios
         .post("http://localhost:9000/api/customers", customer)
         .then(res => {
           this.getAllCustomers();
+          commit("setSelectedCustomer", res.data.data);
           console.log(res.data.data);
         })
         .catch(err => console.error(err));
@@ -109,6 +110,27 @@ export default new Vuex.Store({
     },
     addProductView: ({ commit }) => {
       commit("addProductView");
+    },
+    deleteCustomer: async ({ commit, dispatch }, customers) => {
+      Promise.all(
+        customers.map(async customer => {
+          await axios.delete(
+            `http://localhost:9000/api/customers/${customer.id}`
+          );
+        })
+      ).then(values => {
+        console.log(values);
+        commit("setSelectedCustomer", {});
+        dispatch("getAllCustomers");
+      });
+    },
+    setSideNav: ({ commit }) => {
+      commit("setSideNav");
+    }
+  },
+  getters: {
+    getSelectedCustomer: state => {
+      return state.selectedCustomer;
     }
   }
 });
