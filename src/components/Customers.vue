@@ -1,9 +1,7 @@
 <template>
   <v-container fluid>
     <v-row class="text-center" justify="end">
-      <v-btn dark class="mt-3 ml-3 mr-3 mb-3" @click="addCustomer"
-        >Add Customer</v-btn
-      >
+      <v-btn dark class="ma-3" @click="addCustomer">Add Customer</v-btn>
     </v-row>
     <v-form v-if="selectedCustomer.name || newCustomer">
       <v-container>
@@ -69,28 +67,28 @@ export default {
     headers: [
       {
         text: "Name",
-        value: "name",
+        value: "name"
       },
       {
         text: "Address",
-        value: "address",
+        value: "address"
       },
       {
         text: "Phone",
-        value: "phone",
+        value: "phone"
       },
       {
         text: "Email",
-        value: "email",
+        value: "email"
       },
       {
         text: "Currency",
-        value: "currency",
+        value: "currency"
       },
       {
         text: "Invoice",
-        value: "invoice",
-      },
+        value: "invoice"
+      }
     ],
     customers: [
       {
@@ -99,7 +97,7 @@ export default {
         phone: "578-2394-2349",
         email: "cc@email.com",
         currency: "Yen",
-        invoice: null,
+        invoice: null
       },
       {
         name: "John Smith",
@@ -107,7 +105,7 @@ export default {
         phone: "578-2394-2349",
         email: "cc@email.com",
         currency: "Yen",
-        invoice: null,
+        invoice: null
       },
       {
         name: "John Smith",
@@ -115,7 +113,7 @@ export default {
         phone: "578-2394-2349",
         email: "cc@email.com",
         currency: "Yen",
-        invoice: null,
+        invoice: null
       },
       {
         name: "John Smith",
@@ -123,9 +121,9 @@ export default {
         phone: "578-2394-2349",
         email: "cc@email.com",
         currency: "Yen",
-        invoice: null,
-      },
-    ],
+        invoice: null
+      }
+    ]
   }),
   computed: {
     selectedCustomer: function() {
@@ -133,7 +131,7 @@ export default {
     },
     newCustomer: function() {
       return this.$store.state.newCustomer;
-    },
+    }
   },
   methods: {
     handleClick: function(row) {
@@ -145,8 +143,8 @@ export default {
     closeForm: function() {
       this.$store.dispatch("setSelectedCustomer", {});
       this.$store.dispatch("setNewCustomer", false);
-    },
-  },
+    }
+  }
 };
 </script>
 

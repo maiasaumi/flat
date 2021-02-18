@@ -5,7 +5,7 @@
       <v-spacer></v-spacer>
       <v-app-bar-nav-icon @click="handleNav"></v-app-bar-nav-icon>
     </v-app-bar>
-    <v-navigation-drawer v-model="sideNav" app clipped dark>
+    <v-navigation-drawer :value="sideNav" app clipped dark>
       <v-list>
         <v-list-item link @click="toggleProduct">
           Products
@@ -30,7 +30,7 @@ export default {
 
   components: {
     Products,
-    Customers,
+    Customers
   },
 
   data: () => ({
@@ -42,7 +42,7 @@ export default {
     },
     sideNav: function() {
       return this.$store.state.sideNav;
-    },
+    }
   },
   methods: {
     toggleCustomer: function() {
@@ -53,7 +53,7 @@ export default {
     },
     handleNav: function() {
       this.$store.commit("setSideNav");
-    },
-  },
+    }
+  }
 };
 </script>
