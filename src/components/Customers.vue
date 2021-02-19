@@ -10,7 +10,7 @@
             <v-text-field
               label="Name"
               v-model="name"
-              :value="selectedCustomer ? selectedCustomer.name : ''"
+              :value="selectedCustomer.name ? selectedCustomer.name : ''"
               Required
             ></v-text-field>
           </v-col>
@@ -30,14 +30,16 @@
             <v-text-field
               label="phone"
               v-model="phone"
-              :value="selectedCustomer ? selectedCustomer.phone : ''"
+              :value="selectedCustomer.phone ? selectedCustomer.phone : ''"
               Required
             ></v-text-field>
           </v-col>
           <v-col>
             <v-text-field
               v-model="currency"
-              :value="selectedCustomer ? selectedCustomer.currency : ''"
+              :value="
+                selectedCustomer.currency ? selectedCustomer.currency : ''
+              "
               label="currency"
               Required
             ></v-text-field>

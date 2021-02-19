@@ -12,7 +12,7 @@
           <div class="image_container">
             <v-img :src="property.images[0]">
               <v-badge
-                content="Vacant"
+                :content="property.active ? 'Vacant' : 'Occupied'"
                 :color="property.active ? 'green darken-1' : 'red darken-2'"
                 class="ml-1"
                 tile

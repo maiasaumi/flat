@@ -72,19 +72,20 @@ export default new Vuex.Store({
       await axios
         .post("/api/products", property)
         .then(res => {
+          console.log(res);
+          commit("setSelectedProduct", res.data);
           dispatch("getAllProperties");
-          commit("setSelectedProduct", res.data.data);
-          console.log(res.data.data);
+          console.log(res.data);
         })
         .catch(err => console.error(err));
     },
-    createCustomer: async ({ commit }, customer) => {
+    createCustomer: async ({ commit, dispatch }, customer) => {
       await axios
         .post("/api/customers", customer)
         .then(res => {
-          this.getAllCustomers();
-          commit("setSelectedCustomer", res.data.data);
-          console.log(res.data.data);
+          commit("setSelectedCustomer", {});
+          dispatch("getAllCustomers");
+          console.log(res.data);
         })
         .catch(err => console.error(err));
     },
@@ -118,6 +119,16 @@ export default new Vuex.Store({
         console.log(values);
         commit("setSelectedCustomer", {});
         dispatch("getAllCustomers");
+      });
+    },
+    deleteProduct: async ({ dispatch }, products) => {
+      Promise.all(
+        products.map(async product => {
+          await axios.delete(`/api/products/${product.id}`);
+        })
+      ).then(values => {
+        console.log(values);
+        dispatch("getAllProperties");
       });
     },
     setSideNav: ({ commit }) => {
