@@ -2,7 +2,7 @@
   <v-container fluid>
     <v-overlay :value="showDetailed">
       <v-card light class="cardSize d-flex">
-        <v-row justify="center mt-5">
+        <v-row justify="center" class="mt-5">
           <h1>{{ selectedProduct.name }}</h1>
         </v-row>
         <v-row justify="center" class="ma-5">
@@ -29,6 +29,10 @@
                     ? selectedProduct.metadata.address
                     : ""
                 }}
+              </p>
+              <p>
+                Description:
+                {{ selectedProduct ? selectedProduct.description : "" }}
               </p>
             </div>
             <!-- <ul>
@@ -164,12 +168,9 @@ export default {
         description: this.description,
         active: this.active,
         images: [this.image],
-        metadata: {
-          owner: this.owner,
-          address: this.address
-        }
+        owner: this.owner,
+        address: this.address
       };
-      console.log(property);
       this.$store.dispatch("createProperty", property);
     }
   }
@@ -187,7 +188,7 @@ export default {
 .cardSize {
   flex-direction: column;
   width: 70vw;
-  height: 40vh;
+  height: auto;
 }
 @media only screen and (max-width: 600px) {
   .image {

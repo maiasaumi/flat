@@ -1,11 +1,16 @@
 <template>
   <v-container fluid grid-list-md>
     <v-data-table
+      v-model="selected"
       v-bind:headers="headers"
       :items="allProperties"
       @click:row="handleClick"
+      show-select
     >
     </v-data-table>
+    <v-row justify="end" class="ma-1">
+      <v-btn @click="deleteProduct" dark>delete product</v-btn>
+    </v-row>
   </v-container>
 </template>
 
@@ -29,7 +34,8 @@ export default {
         text: "Vacant",
         value: "active"
       }
-    ]
+    ],
+    selected: []
   }),
   computed: {
     allProperties: function() {
@@ -40,6 +46,9 @@ export default {
     handleClick: function(row) {
       this.$store.dispatch("setSelectedProduct", row);
       this.$store.dispatch("setShowDetailed", true);
+    },
+    deleteProduct: function() {
+      this.$store.dispatch("deleteProduct", this.selected);
     }
   }
 };
