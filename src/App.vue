@@ -5,17 +5,16 @@
       <v-spacer></v-spacer>
       <v-app-bar-nav-icon @click="handleNav"></v-app-bar-nav-icon>
     </v-app-bar>
-    <v-navigation-drawer v-model="sideNav" app clipped dark>
+    <v-navigation-drawer :value="sideNav" app clipped dark bottom>
       <v-list>
         <v-list-item link @click="toggleProduct">
           Products
         </v-list-item>
+        <v-divider></v-divider>
         <v-list-item link @click="toggleCustomer">
           Customers
         </v-list-item>
-        <v-list-item link @click="refresh">
-          Refresh
-        </v-list-item>
+        <v-divider></v-divider>
       </v-list>
     </v-navigation-drawer>
     <v-main>
@@ -33,7 +32,7 @@ export default {
 
   components: {
     Products,
-    Customers,
+    Customers
   },
 
   data: () => ({
@@ -45,21 +44,27 @@ export default {
     },
     sideNav: function() {
       return this.$store.state.sideNav;
-    },
+    }
+  },
+  mounted() {
+    this.$store.dispatch("getAllProperties");
+    this.$store.dispatch("getAllCustomers");
   },
   methods: {
     toggleCustomer: function() {
+      this.$store.dispatch("setSideNav");
       this.$store.dispatch("setView", "Customer");
     },
     toggleProduct: function() {
+      this.$store.dispatch("setSideNav");
       this.$store.dispatch("setView", "Product");
     },
     handleNav: function() {
-      this.$store.commit("setSideNav");
+      this.$store.dispatch("setSideNav");
     },
     refresh: function() {
       this.$store.dispatch("getAllProperties");
     }
-  },
+  }
 };
 </script>
