@@ -10,7 +10,7 @@
             <v-text-field
               label="Name"
               v-model="name"
-              :value="selectedCustomer.name"
+              :value="selectedCustomer ? selectedCustomer.name : ''"
               Required
             ></v-text-field>
           </v-col>
@@ -18,7 +18,9 @@
             <v-text-field
               label="address"
               v-model="address"
-              :value="selectedCustomer.address.line1"
+              :value="
+                selectedCustomer.address ? selectedCustomer.address.line1 : ''
+              "
               Required
             ></v-text-field>
           </v-col>
@@ -28,14 +30,14 @@
             <v-text-field
               label="phone"
               v-model="phone"
-              :value="selectedCustomer.phone"
+              :value="selectedCustomer ? selectedCustomer.phone : ''"
               Required
             ></v-text-field>
           </v-col>
           <v-col>
             <v-text-field
               v-model="currency"
-              :value="selectedCustomer.currency"
+              :value="selectedCustomer ? selectedCustomer.currency : ''"
               label="currency"
               Required
             ></v-text-field>
@@ -46,7 +48,7 @@
             <v-text-field
               label="email"
               v-model="email"
-              :value="selectedCustomer.email"
+              :value="selectedCustomer ? selectedCustomer.email : ''"
               Required
             ></v-text-field>
           </v-col>

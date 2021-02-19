@@ -55,24 +55,22 @@ export default new Vuex.Store({
   },
   actions: {
     getAllProperties: async ({ commit }) => {
-      const products = await axios.get("http://localhost:9000/api/products");
+      const products = await axios.get("/api/products");
       console.log(products.data.data);
       commit("setAllProperties", products.data.data);
     },
     getAllCustomers: async ({ commit }) => {
-      const customers = await axios.get("http://localhost:9000/api/customers");
+      const customers = await axios.get("/api/customers");
       commit("setAllCustomers", customers.data.data);
     },
     getAllPrices: async ({ commit }, id) => {
-      const prices = await axios.get(
-        `http://localhost:9000/api/prices/?product=${id}`
-      );
+      const prices = await axios.get(`/api/prices/?product=${id}`);
       commit("setProductPrices", prices);
     },
     createProperty: async ({ commit, dispatch }, property) => {
       console.log(property);
       await axios
-        .post("http://localhost:9000/api/products", property)
+        .post("/api/products", property)
         .then(res => {
           dispatch("getAllProperties");
           commit("setSelectedProduct", res.data.data);
@@ -82,7 +80,7 @@ export default new Vuex.Store({
     },
     createCustomer: async ({ commit }, customer) => {
       await axios
-        .post("http://localhost:9000/api/customers", customer)
+        .post("/api/customers", customer)
         .then(res => {
           this.getAllCustomers();
           commit("setSelectedCustomer", res.data.data);
@@ -114,9 +112,7 @@ export default new Vuex.Store({
     deleteCustomer: async ({ commit, dispatch }, customers) => {
       Promise.all(
         customers.map(async customer => {
-          await axios.delete(
-            `http://localhost:9000/api/customers/${customer.id}`
-          );
+          await axios.delete(`/api/customers/${customer.id}`);
         })
       ).then(values => {
         console.log(values);
